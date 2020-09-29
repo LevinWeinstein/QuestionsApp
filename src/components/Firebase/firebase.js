@@ -27,8 +27,14 @@ const config = {
 
       doSignOut = () => this.auth.signOut();
 
+      doPasswordReset = email => {
+          console.error("Sending email to " + email)
+          return this.auth.sendPasswordResetEmail(email);
+      }
+
       doPasswordUpdate = password =>
         this.auth.currentUser.updatePassword(password);
+    
 
   }
 

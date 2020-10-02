@@ -4,20 +4,15 @@ import { compose } from 'recompose';
 
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
-
-
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import './SignIn.scss'
 
 const SignInPage = () => (
-  <div className="outerDiv">
-    <div>
-    <h1>Sign In</h1>
+  <div>
+    <h1>SignIn</h1>
     <SignInForm />
     <PasswordForgetLink />
     <SignUpLink />
-    </div>
   </div>
 );
 
@@ -35,8 +30,6 @@ class SignInFormBase extends Component {
   }
 
   onSubmit = event => {
-    event.preventDefault();
-
     const { email, password } = this.state;
 
     this.props.firebase
@@ -49,6 +42,7 @@ class SignInFormBase extends Component {
         this.setState({ error });
       });
 
+    event.preventDefault();
   };
 
   onChange = event => {

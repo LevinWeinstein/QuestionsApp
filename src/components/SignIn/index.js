@@ -6,13 +6,13 @@ import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import './SignIn.css'
 
 const SignInPage = () => (
-  <div>
-    <h1>SignIn</h1>
-    <SignInForm />
-    <PasswordForgetLink />
-    <SignUpLink />
+  <div class="outerWrapper">
+    <div class="innerPart">
+      <SignInGoogle />
+    </div>
   </div>
 );
 
@@ -21,6 +21,46 @@ const INITIAL_STATE = {
   password: '',
   error: null,
 };
+
+class SignInGoogleBase extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = { error: null };
+  }
+
+  onSubmit = event => {
+    this.props.firebase
+      .doSignInWithGoogle()
+      .then(socialAuthUser => {
+        return this.props.firebase
+          .user(socialAuthUser.user.uid)
+          .set({
+            username: socialAuthUser.user.displayName,
+            email: socialAuthUser.user.email,
+            roles: {},
+          });
+      })
+      .then(() => {
+        this.setState({ error: null});
+        this.props.history.push(ROUTES.HOME)
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+    event.preventDefault();
+  }
+
+  render() { 
+    const { error } = this.state;
+
+    return (
+      <form>
+          <img class="googleButton" src={require('../../assets/login.png')} alt="Sign In With Google" onClick={this.onSubmit}/>
+      </form>
+    )
+  }
+}
 
 class SignInFormBase extends Component {
   constructor(props) {
@@ -85,6 +125,11 @@ const SignInForm = compose(
   withFirebase,
 )(SignInFormBase);
 
+const SignInGoogle = compose(
+  withRouter,
+  withFirebase
+)(SignInGoogleBase)
+
 export default SignInPage;
 
-export { SignInForm };
+export { SignInForm, SignInGoogle };

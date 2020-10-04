@@ -70,6 +70,8 @@ class Firebase {
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref('users');
 
+  questions = () => this.db.ref('questions');
+  question = qid => this.db.ref(`questions/${qid}`)
   doSignInWithGoogle = () =>
       this.auth.signInWithPopup(this.googleProvider);
 }

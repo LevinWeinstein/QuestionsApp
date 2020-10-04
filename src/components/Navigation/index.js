@@ -26,10 +26,10 @@ const NavigationAuth = ({ authUser }) => (
       <SignOutButton />
     </li>
     <li>
-      <Link to={ROUTES.HOME}>Home</Link>
+      <Link to={ROUTES.HOME}>Questions</Link>
     </li>
     <li>
-      <Link to={ROUTES.ACCOUNT}>Account</Link>
+      <Link to={ROUTES.ACCOUNT}>Search</Link>
     </li>
     {authUser.roles.includes(ROLES.ADMIN) && (
       <li>
@@ -43,6 +43,12 @@ const NavigationAuth = ({ authUser }) => (
 const NavigationNonAuth = () => (
   <ul className="navBar">
     <li className="logo"><Link to={ROUTES.SIGN_IN}>Questions</Link></li>
+    <li>
+      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
+    </li>
+    <li>
+      <Link to={ROUTES.ACCOUNT}>Search</Link>
+    </li>
   </ul>
 );
 

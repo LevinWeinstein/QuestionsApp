@@ -1,5 +1,8 @@
 .centerer {
     display: flex;
+    position: absolute;
+    height: 80%;
+    width: 100%;
     justify-content: center;
     align-items: center;
 }
